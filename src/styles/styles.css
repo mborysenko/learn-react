@@ -1,0 +1,17 @@
+.edu-application {
+    background: #002240;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.edu-title {
+    color: #efefef;
+}
+
+a.active {
+    color: orange;
+}
