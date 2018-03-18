@@ -1,7 +1,8 @@
 import React, {PropTypes} from "react";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import * as corseActions from "./actions";
+import * as courseActions from "./actions";
+import CourseList from "./CourseList";
 
 class CourseDetails extends React.Component {
     constructor(props, context) {
@@ -31,11 +32,12 @@ class CourseDetails extends React.Component {
     }
 
     render() {
+        let {courses} = this.props;
         return (
             <div className="jumbotron">
                 <h1>Course Page</h1>
                 <p>This page contains the Table of Contents</p>
-                {this.props.courses.map(this.courseRow)}
+                <CourseList courses={courses}/>
                 <h2>Add Course</h2>
                 <input
                     type="text"
@@ -58,7 +60,7 @@ CourseDetails.propTypes = {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(corseActions, dispatch)
+        actions: bindActionCreators(courseActions, dispatch)
     };
 }
 
