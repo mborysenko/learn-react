@@ -1,3 +1,4 @@
-export default const Actions = {
-    CREATE_COURSE_ACTION: "CREATE_COURSE"
-}
+export const Actions = {
+    CREATE_COURSE_ACTION: "CREATE_COURSE",
+    COURSES_LOAD_SUCCESS_ACTION: "COURSES_LOAD_SUCCESS"
+};
