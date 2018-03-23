@@ -4,7 +4,7 @@ import {bindActionCreators} from "redux";
 import * as courseActions from "./actions";
 import CourseList from "./CourseList";
 
-class CourseDetails extends React.Component {
+class CoursesPage extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -53,7 +53,7 @@ class CourseDetails extends React.Component {
     }
 }
 
-CourseDetails.propTypes = {
+CoursesPage.propTypes = {
     courses: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired
 };
@@ -70,4 +70,4 @@ function mapStateToProps(state, componentProps) {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CourseDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(CoursesPage);

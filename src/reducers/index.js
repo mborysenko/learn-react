@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import courses from '../pages/Course/reducers';
+import courses from '../pages/Courses/reducers';
 
 
 const rootReducer = combineReducers({

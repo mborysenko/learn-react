@@ -1,7 +1,7 @@
 import {Actions} from "./constants";
 import CourseService from "../../api/mockCourseApi";
 
-export function coursesLoadSuccess(courses) {
+export function loadCoursesSuccess(courses) {
     return {
         type: Actions.COURSES_LOAD_SUCCESS_ACTION,
         courses
@@ -19,7 +19,7 @@ export function loadCourses() {
     return function (dispatch) {
         return CourseService.getAllCourses()
             .then((courses) => {
-                dispatch(coursesLoadSuccess(courses));
+                dispatch(loadCoursesSuccess(courses));
             }).catch(error => {
                 throw(error);
             });
