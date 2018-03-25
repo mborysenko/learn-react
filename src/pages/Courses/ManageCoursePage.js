@@ -11,26 +11,33 @@ class ManageCoursePage extends React.Component {
             course: Object.assign({}, props.course),
             errors: {}
         };
-    }
 
-    render() {
-        return (<CourseForm
-                allAuthors={[]}
-                course={this.state.course}
-                errors={this.state.errors}/>);
+        this.updateCourseState.bind(this);
     }
 
     onSave() {
 
     }
 
-    onChange() {
+    updateCourseState(event) {
+        const field = event.target.name;
+        let course = Object.assign({}, this.state.course);
+        course[field] = event.target.value;
+        this.setState({course});
+    }
 
+    render() {
+        return (<CourseForm
+            allAuthors={this.props.authors}
+            course={this.state.course}
+            errors={this.state.errors}
+            onChange={this.updateCourseState}/>);
     }
 }
 
 ManageCoursePage.propTypes = {
-    course: PropTypes.object.isRequired
+    course: PropTypes.object.isRequired,
+    authors: PropTypes.array.isRequired
 };
 
 function mapDispatchToProps(dispatch) {
@@ -48,8 +55,16 @@ function mapStateToProps(state, componentProps) {
         length: "",
         category: ""
     };
+    let authorOptions = state.authors.map((a) => {
+        return {
+            value: a.id,
+            text: [a.firstName, a.lastName].join(" ")
+        };
+
+    });
     return {
-        course
+        course,
+        authors: authorOptions
     };
 }
 

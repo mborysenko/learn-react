@@ -25,3 +25,18 @@ export function loadCourses() {
             });
     }
 }
+
+export function saveCourse(course) {
+    return function (dispatch, getState) {
+        return CourseService.saveCourse(course)
+            .then((savedCourse) => {
+                // course.id
+                //     ? dispatch(courseUpdateSuccess(savedCourse))
+                //     : dispatch(courseCreateSuccess(savedCourse));
+            })
+            .catch((error) => {
+                throw error;
+            })
+    }
+
+}
