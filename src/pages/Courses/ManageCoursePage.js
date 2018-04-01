@@ -12,11 +12,20 @@ class ManageCoursePage extends React.Component {
             errors: {}
         };
 
-        this.updateCourseState.bind(this);
+        this.updateCourseState = this.updateCourseState.bind(this);
+        this.saveCourse = this.saveCourse.bind(this);
     }
 
-    onSave() {
+    componentWillReceiveProps(nextProps) {
+        if(this.props.course.id !== nextProps.course.id) {
+            this.setState({ course: Object.assign({}, nextProps.course)});
+        }
+    }
 
+    saveCourse(event) {
+        event.preventDefault();
+        this.props.actions.saveCourse(this.state.course);
+        this.context.router.push("/courses");
     }
 
     updateCourseState(event) {
@@ -31,21 +40,32 @@ class ManageCoursePage extends React.Component {
             allAuthors={this.props.authors}
             course={this.state.course}
             errors={this.state.errors}
-            onChange={this.updateCourseState}/>);
+            onChange={this.updateCourseState}
+            onSave={this.saveCourse}
+        />);
     }
 }
 
 ManageCoursePage.propTypes = {
     course: PropTypes.object.isRequired,
-    authors: PropTypes.array.isRequired
+    authors: PropTypes.array.isRequired,
+    actions: PropTypes.object.isRequired,
+};
+
+ManageCoursePage.contextTypes = {
+    router: PropTypes.object.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(courseActions, dispatch)
+        actions: bindActionCreators(courseActions, dispatch),
     };
 }
 
+function getCourseById(courses, courseId) {
+    let found = courses.find(c => c.id === courseId);
+    return found ? found : null;
+}
 function mapStateToProps(state, componentProps) {
     let course = {
         id: "",
@@ -55,16 +75,23 @@ function mapStateToProps(state, componentProps) {
         length: "",
         category: ""
     };
-    let authorOptions = state.authors.map((a) => {
+
+    let courseId = componentProps.params.id;
+    if (courseId && state.courses.length > 0) {
+        course = getCourseById(state.courses, courseId);
+    }
+
+    let authors = state.authors.map((a) => {
         return {
             value: a.id,
             text: [a.firstName, a.lastName].join(" ")
         };
 
     });
+
     return {
         course,
-        authors: authorOptions
+        authors,
     };
 }
 

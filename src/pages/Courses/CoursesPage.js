@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import * as courseActions from "./actions";
 import CourseList from "./CourseList";
+import {browserHistory} from "react-router";
 
 class CoursesPage extends React.Component {
     constructor(props, context) {
@@ -13,22 +14,11 @@ class CoursesPage extends React.Component {
             }
         };
 
-        this.onTitleChange = this.onTitleChange.bind(this);
-        this.onClickSave = this.onClickSave.bind(this);
+        this.redirectToAddCoursePage = this.redirectToAddCoursePage.bind(this);
     }
 
-    courseRow(course, index) {
-        return <div key={index}>{course.title}</div>;
-    }
-
-    onTitleChange(event) {
-        const course = this.state.course;
-        course.title = event.target.value;
-        this.setState({course});
-    }
-
-    onClickSave() {
-        this.props.actions.createCourse(this.state.course);
+    redirectToAddCoursePage() {
+        browserHistory.push("/course")
     }
 
     render() {
@@ -36,18 +26,14 @@ class CoursesPage extends React.Component {
         return (
             <div className="jumbotron">
                 <h1>Course Page</h1>
-                <p>This page contains the Table of Contents</p>
-                <CourseList courses={courses}/>
-                <h2>Add Course</h2>
-                <input
-                    type="text"
-                    onChange={this.onTitleChange}
-                    value={this.state.course.title}/>
                 <input
                     type="submit"
-                    value={"Save"}
-                    onClick={this.onClickSave}
+                    value={"Add new course"}
+                    className="btn btn-primary"
+                    onClick={this.redirectToAddCoursePage}
                 />
+                <p>This page contains the Table of Contents</p>
+                <CourseList courses={courses}/>
             </div>
         );
     }

@@ -10,7 +10,7 @@ export function loadCoursesSuccess(courses) {
 
 export function createCourse(course) {
     return {
-        type: Actions.CREATE_COURSE_ACTION,
+        type: Actions.NEW_COURSE_ACTION,
         course
     };
 }
@@ -26,13 +26,28 @@ export function loadCourses() {
     }
 }
 
+export function courseCreateSuccess(course) {
+    return {
+        type: Actions.CREATE_COURSE_SUCCESS_ACTION,
+        course
+    };
+}
+
+export function courseUpdateSuccess(course) {
+    return {
+        type: Actions.UPDATE_COURSE_SUCCESS_ACTION,
+        course
+    };
+
+}
+
 export function saveCourse(course) {
     return function (dispatch, getState) {
         return CourseService.saveCourse(course)
             .then((savedCourse) => {
-                // course.id
-                //     ? dispatch(courseUpdateSuccess(savedCourse))
-                //     : dispatch(courseCreateSuccess(savedCourse));
+                course.id
+                    ? dispatch(courseUpdateSuccess(savedCourse))
+                    : dispatch(courseCreateSuccess(savedCourse));
             })
             .catch((error) => {
                 throw error;
