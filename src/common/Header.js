@@ -1,5 +1,6 @@
 import React, {PropTypes} from "react";
 import {Link, IndexLink} from "react-router";
+import {Elipsis} from "./Elipsis";
 
 const Header = (props) => {
     return (
@@ -9,11 +10,12 @@ const Header = (props) => {
             <Link to="/courses" activeClassName="active">Course</Link>
             {" | "}
             <Link to="/about" activeClassName="active">About</Link>
+            <Elipsis interval={100} dots={10}/>
         </nav>
     );
 };
 
-Header.prototype.propTypes = {
+Header.propTypes = {
 };
 
 export default Header;

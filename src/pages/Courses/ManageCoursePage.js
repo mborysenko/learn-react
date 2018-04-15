@@ -49,16 +49,16 @@ class ManageCoursePage extends React.Component {
 ManageCoursePage.propTypes = {
     course: PropTypes.object.isRequired,
     authors: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired
 };
 
 ManageCoursePage.contextTypes = {
-    router: PropTypes.object.isRequired,
+    router: PropTypes.object.isRequired
 };
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(courseActions, dispatch),
+        actions: bindActionCreators(courseActions, dispatch)
     };
 }
 
@@ -91,7 +91,7 @@ function mapStateToProps(state, componentProps) {
 
     return {
         course,
-        authors,
+        authors
     };
 }
 
