@@ -18,6 +18,7 @@ const CourseForm = ({course, allAuthors, onSave, onChange, loading, errors}) => 
             <TextInput name="category" value={course.category} label={"Category"} onChange={onChange} error={errors.category}/>
             <TextInput name="length" value={course.length} label={"Length"} onChange={onChange} error={errors.length}/>
             <input type="submit" onClick={onSave}
+                   disabled={loading}
                    value={(loading) ? "Saving" : "Save"}
                     className={"btn btn-primary"}/>
         </form>

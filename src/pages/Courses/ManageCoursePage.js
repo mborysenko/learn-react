@@ -3,13 +3,15 @@ import * as courseActions from "./actions";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import CourseForm from "./CourseForm";
+import toastr from "toastr";
 
 class ManageCoursePage extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
             course: Object.assign({}, props.course),
-            errors: {}
+            errors: {},
+            saving: false
         };
 
         this.updateCourseState = this.updateCourseState.bind(this);
@@ -17,14 +19,34 @@ class ManageCoursePage extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if(this.props.course.id !== nextProps.course.id) {
-            this.setState({ course: Object.assign({}, nextProps.course)});
+        if (this.props.course.id !== nextProps.course.id) {
+            this.setState({course: Object.assign({}, nextProps.course)});
         }
     }
 
     saveCourse(event) {
         event.preventDefault();
-        this.props.actions.saveCourse(this.state.course);
+        this.setState({
+            saving: true
+        });
+        this.props.actions
+            .saveCourse(this.state.course)
+            .then(() => {
+                this.redirect();
+            })
+            .catch((error) => {
+                toastr.error(error);
+                this.setState({
+                    saving: false
+                });
+            });
+    }
+
+    redirect() {
+        this.setState({
+            saving: false
+        });
+        toastr.success("Course saved");
         this.context.router.push("/courses");
     }
 
@@ -42,6 +64,7 @@ class ManageCoursePage extends React.Component {
             errors={this.state.errors}
             onChange={this.updateCourseState}
             onSave={this.saveCourse}
+            loading={this.state.saving}
         />);
     }
 }
@@ -66,6 +89,7 @@ function getCourseById(courses, courseId) {
     let found = courses.find(c => c.id === courseId);
     return found ? found : null;
 }
+
 function mapStateToProps(state, componentProps) {
     let course = {
         id: "",

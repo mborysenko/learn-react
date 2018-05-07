@@ -4,19 +4,22 @@ export class Elipsis extends React.Component {
     constructor(props) {
         super(props);
 
-        this.state = {frame: 1};
+        this.state = {
+            frame: 1,
+            intervalSubscription: null
+        };
     }
 
     componentDidMount() {
-        this.props.interval = setInterval(() => {
+        this.setState({intervalSubscription: setInterval(() => {
             this.setState({
                 frame: this.state.frame + 1
             })
-        }, this.props.interval);
+        }, this.props.interval)});
     }
 
     componentWillUnmount() {
-        clearInterval(this.props.interval);
+        clearInterval(this.state.intervalSubscription);
     }
 
     render() {
@@ -26,7 +29,7 @@ export class Elipsis extends React.Component {
             text += ".";
             dots--;
         }
-        return <span {...this.props}>{text} kkkk</span>;
+        return <span {...this.props}>{text}</span>;
     }
 }
 
