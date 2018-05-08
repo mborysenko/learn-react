@@ -1,7 +1,9 @@
 import {Actions} from "./constants";
 import CourseService from "../../api/mockCourseApi";
+import { startAsyncCall, asyncCallError} from "../../actions/async/ajaxActions";
 
 export function loadCoursesSuccess(courses) {
+
     return {
         type: Actions.COURSES_LOAD_SUCCESS_ACTION,
         courses
@@ -17,10 +19,12 @@ export function createCourse(course) {
 
 export function loadCourses() {
     return function (dispatch) {
+        dispatch(startAsyncCall());
         return CourseService.getAllCourses()
             .then((courses) => {
                 dispatch(loadCoursesSuccess(courses));
             }).catch(error => {
+                dispatch(asyncCallError());
                 throw(error);
             });
     }
@@ -43,6 +47,7 @@ export function courseUpdateSuccess(course) {
 
 export function saveCourse(course) {
     return function (dispatch, getState) {
+        dispatch(startAsyncCall());
         return CourseService.saveCourse(course)
             .then((savedCourse) => {
                 course.id
@@ -50,6 +55,7 @@ export function saveCourse(course) {
                     : dispatch(courseCreateSuccess(savedCourse));
             })
             .catch((error) => {
+                dispatch(asyncCallError());
                 throw error;
             })
     }

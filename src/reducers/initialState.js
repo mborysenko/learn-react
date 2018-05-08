@@ -1,5 +1,5 @@
 export default {
     authors: [],
     courses: [],
-    numberOfRunningCalls: 0
+    asyncCallsInProgress: 0
 };

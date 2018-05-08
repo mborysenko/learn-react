@@ -1,8 +1,8 @@
-import React, {PropTypes} from "react";
-import {Link, IndexLink} from "react-router";
+import React from "react";
+import {IndexLink, Link} from "react-router";
 import {Elipsis} from "./Elipsis";
 
-const Header = (props) => {
+const Header = ({loading}) => {
     return (
         <nav>
             <IndexLink to="/" activeClassName="active">Home</IndexLink>
@@ -10,12 +10,11 @@ const Header = (props) => {
             <Link to="/courses" activeClassName="active">Course</Link>
             {" | "}
             <Link to="/about" activeClassName="active">About</Link>
-            <Elipsis interval={100} dots={10}/>
+            {loading && <Elipsis interval={100} dots={10}/>}
         </nav>
     );
 };
 
-Header.propTypes = {
-};
+Header.propTypes = {};
 
 export default Header;
