@@ -4,8 +4,9 @@ import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import CourseForm from "./CourseForm";
 import toastr from "toastr";
+import {authorsFormattedForDropdown} from "../../selectors/authorsFormattedForDropdown";
 
-class ManageCoursePage extends React.Component {
+export class ManageCoursePage extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {
@@ -24,8 +25,23 @@ class ManageCoursePage extends React.Component {
         }
     }
 
+    formIsValid() {
+        let isOrNot = true;
+        let errors = {};
+        if(this.state.course.title.length < 5) {
+            errors.title = "Title must be at least 5 characters.";
+            isOrNot = false
+        }
+        this.setState({ errors });
+        return isOrNot;
+    }
+
     saveCourse(event) {
         event.preventDefault();
+
+        if(!this.formIsValid()) {
+            return;
+        }
         this.setState({
             saving: true
         });
@@ -105,13 +121,7 @@ function mapStateToProps(state, componentProps) {
         course = getCourseById(state.courses, courseId);
     }
 
-    let authors = state.authors.map((a) => {
-        return {
-            value: a.id,
-            text: [a.firstName, a.lastName].join(" ")
-        };
-
-    });
+    let authors = authorsFormattedForDropdown(state.authors);
 
     return {
         course,

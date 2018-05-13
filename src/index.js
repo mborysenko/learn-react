@@ -2,11 +2,12 @@ import "babel-polyfill";
 import React from "react";
 import {render} from "react-dom";
 
-import configureStore from './store/configureStore'
 import {Provider} from 'react-redux';
+
 import {browserHistory, Router} from "react-router";
 import routes from "./routes";
 
+import configureStore from './store/configureStore'
 import {loadCourses} from "./pages/Courses/actions";
 import {loadAuthors} from "./authors/actions";
 
